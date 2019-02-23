@@ -10,7 +10,7 @@ const contactsRef: firebase.database.Reference = firebaseapp.database().ref('/tF
 
 const app = express();
 
-app.get('/getContacts', (request, response) => {
+app.get('/getContacts', (request:any, response:any) => {
     cors()
         response.setHeader('Access-Control-Allow-Origin', '*');
         response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -19,8 +19,8 @@ app.get('/getContacts', (request, response) => {
         response.setHeader('Content-Type', 'application/json');
 
         const promise = contactsRef.once('value').then(snap => snap.val());
-        promise.then((facts) => {
-        response.send(facts);
+        promise.then((item) => {
+            response.json(item);
         }, (error) => {
             response.json(error);
         });
