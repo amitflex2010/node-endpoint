@@ -33,6 +33,11 @@ app.post('/postContact', (request:any, response:any) => {
         
 });
 
+function getDateTime() {
+  const d = new Date();
+  return new Date(d).toLocaleString();
+}
+
 function addAndUpdateContacts(empId: any, request:any,  response: any) {
     const promise = contactsRef.once('value').then(snap => snap.val());
 
@@ -45,7 +50,8 @@ function addAndUpdateContacts(empId: any, request:any,  response: any) {
         firebaseapp.database().ref('/tFactor/'+request.body.empId).set({
             tFactor: request.body.tFactor,
             empName: request.body.empName,
-            empId: request.body.empId     
+            empId: request.body.empId,
+            lastupdated: getDateTime()    
           }).then(() => {
             response.send('Value updated');
           }, (error) => {
